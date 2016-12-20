@@ -18,10 +18,13 @@ public class TCPServer {
             DataOutputStream outToClient = new DataOutputStream(connectionSocket.getOutputStream());
             clientSentence =inFromClient.readLine();
             capitalizedSentence = clientSentence.toUpperCase() +"\n";
-            outToClient.writeBytes(capitalizedSentence);
+            System.out.println(capitalizedSentence);
+//            outToClient.writeBytes(capitalizedSentence);
 
 
         }
     }
+
+
 
 }
