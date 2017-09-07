@@ -1,4 +1,5 @@
 package myPractice.concurrent.BlockingQueue;
+//主要使用了blocking queue
 
 import java.io.File;
 import java.io.FileNotFoundException;
