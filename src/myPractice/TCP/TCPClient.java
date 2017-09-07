@@ -1,4 +1,4 @@
-/**
+package myPractice.TCP; /**
  * Created by win7x64 on 2016/12/18.
  */
 import java.io.*;
@@ -19,7 +19,6 @@ public class TCPClient {
         modifiedSentence = inFromServer.readLine();
         System.out.println("From server: "+modifiedSentence);
         clientSocket.close();
-
     }
 
 }

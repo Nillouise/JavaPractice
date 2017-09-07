@@ -1,3 +1,5 @@
+package myPractice.TCP;
+
 import java.net.* ;
 import java.io.* ;
 
@@ -82,11 +84,6 @@ class linkToWeb
 
 
     }
-
-
-    
-    
-
 }
 
 
