@@ -29,6 +29,14 @@ class Bank
             accounts[from]-=money;
             accounts[to]+=money;
             System.out.printf("after transfer %f money,account %d has %f money,account %d has %f money\n",money,from,accounts[from],to,accounts[to]);
+
+            double total =0;
+            for (double i : accounts)
+            {
+                total+=i;
+            }
+            System.out.println("total:"+total);
+
             condition.signalAll();
 
         } catch (InterruptedException e)
@@ -48,7 +56,7 @@ class Transact implements Runnable
     Bank bank;
     int banksize;
 
-    public Transact(Bank bank,int banksize)
+    public Transact(Bank bank, int banksize)
     {
         this.bank = bank;
         this.banksize = banksize;
