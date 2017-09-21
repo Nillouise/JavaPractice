@@ -1,5 +1,5 @@
 package myPractice.concurrent.Thread;
-
+//这程序运行一段时间就会deadlock掉
 import java.util.Arrays;
 import java.util.concurrent.locks.Condition;
 import java.util.concurrent.locks.Lock;
