@@ -8,6 +8,8 @@ import java.util.concurrent.ArrayBlockingQueue;
 import java.util.concurrent.BlockingQueue;
 
 //多线程搜索文件夹内的关键字，速度好像比单线程快一倍，但无论开多少线程，都也只能快一倍左右
+
+
 class FileProducer implements Runnable
 {
     String initdirectory;
@@ -57,6 +59,8 @@ class FileProducer implements Runnable
 
     }
 }
+
+
 
 class FileConsumer implements Runnable
 {

@@ -8,9 +8,7 @@ import java.io.FileNotFoundException;
 import java.util.ArrayList;
 import java.util.List;
 import java.util.Scanner;
-import java.util.concurrent.Callable;
-import java.util.concurrent.ExecutionException;
-import java.util.concurrent.FutureTask;
+import java.util.concurrent.*;
 
 class FileMatcher implements Callable<Integer>
 {
@@ -31,10 +29,7 @@ class FileMatcher implements Callable<Integer>
         {
             if(f.isDirectory())
             {
-                FileMatcher fileMatcher = new FileMatcher(f);
-                FutureTask<Integer> task = new FutureTask<Integer>(fileMatcher);
-                list.add(task);
-                new Thread(task).start();
+                multithreadProcess(f,list);
             }else{
                 cnt+=search(f);
             }
@@ -44,6 +39,16 @@ class FileMatcher implements Callable<Integer>
             cnt += task.get();
         }
         return cnt;
+    }
+
+    //这里把线程实现用的技术独立出来，用什么线程技术处理一个directory，方便子类更改
+    public int multithreadProcess(File directory,List<FutureTask<Integer>> list)
+    {
+        FileMatcher fileMatcher = new FileMatcher(directory);
+        FutureTask<Integer> task = new FutureTask<Integer>(fileMatcher);
+        list.add(task);
+        new Thread(task).start();
+        return 0;
     }
 
     public Integer search(File f)
@@ -68,12 +73,37 @@ class FileMatcher implements Callable<Integer>
 
 }
 
+//用一个pool而不是看见一个新文件夹就创建新一条线程
+class ExecutorFileMatch extends FileMatcher
+{
+    ExecutorService pool;
+    List<FutureTask<Integer>> list;
+
+    public ExecutorFileMatch(File baseDirectory, ExecutorService pool,List<FutureTask<Integer>> list )
+    {
+        super(baseDirectory);
+        this.pool = pool;
+        this.list = list;
+    }
+
+    @Override
+    public int multithreadProcess(File directory, List<FutureTask<Integer>> noNeed)
+    {
+        ExecutorFileMatch fileMatcher = new ExecutorFileMatch(directory,pool,this.list);
+        FutureTask<Integer> task = new FutureTask<Integer>(fileMatcher);
+        pool.submit(task);
+        list.add(task);
+        return 0;
+    }
+
+}
+
 
 public class SearchFile1
 {
     public static void main(String[] args)
     {
-        FileMatcher fileMatcher = new FileMatcher(new File("C:\\code\\debug"));
+        FileMatcher fileMatcher = new FileMatcher(new File("C:\\code"));
         FutureTask<Integer> task = new FutureTask<Integer>(fileMatcher);
         new Thread(task).start();
         try
@@ -86,6 +116,34 @@ public class SearchFile1
         {
             e.printStackTrace();
         }
+
+
+        ExecutorService pool = Executors.newFixedThreadPool(10);
+        List<FutureTask<Integer>> list = new ArrayList<>();
+
+        FileMatcher excuMatcher = new ExecutorFileMatch(new File("C:\\code"),pool,list);
+
+//        ExecutorFileMatch excuMatcher = new ExecutorFileMatch(new File("C:\\code\\debug"),pool,list);
+        FutureTask<Integer> et = new FutureTask<Integer>(excuMatcher);
+        list.add(et);
+        pool.submit(et);
+
+        int total = 0;
+        for (FutureTask<Integer> futureTask : list)
+        {
+            try
+            {
+                total += futureTask.get();
+            } catch (InterruptedException e)
+            {
+                e.printStackTrace();
+            } catch (ExecutionException e)
+            {
+                e.printStackTrace();
+            }
+        }
+        System.out.println(total);
+
     }
 
 }
