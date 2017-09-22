@@ -91,7 +91,7 @@ class ExecutorFileMatch extends FileMatcher
     {
         ExecutorFileMatch fileMatcher = new ExecutorFileMatch(directory,pool,this.list);
         FutureTask<Integer> task = new FutureTask<Integer>(fileMatcher);
-        pool.submit(task);
+        pool.submit(task);//感觉是pool不支持多线程插入任务
         list.add(task);
         return 0;
     }
@@ -129,6 +129,9 @@ public class SearchFile1
         pool.submit(et);
 
         int total = 0;
+//        for (FutureTask<Integer> futureTask : list)//出现ConcurrentModificationException，因为子线程改了这个list
+        pool.shutdown();//shutdown之后，当所有线程都执行完毕，就会产生terminate信号
+        while (!pool.isTerminated());
         for (FutureTask<Integer> futureTask : list)
         {
             try
