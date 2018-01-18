@@ -12,7 +12,7 @@
         <!--mysql数据库连接的信息：驱动类、连接地址、用户名、密码 -->
         <jdbcConnection driverClass="com.mysql.jdbc.Driver"
                         connectionURL="jdbc:mysql://rm-bp1ekv86jpdmj6217io.mysql.rds.aliyuncs.com:3306/aifunai" userId="aifunai"
-                        password="!">
+                        password="Db123456!">
         </jdbcConnection>
 
         <!--oracle配置-->
@@ -50,7 +50,7 @@
         </javaClientGenerator>
 
         <!-- 指定数据库表，要生成哪些表，就写哪些表，要和数据库中对应，不能写错！ -->
-        <table tableName="users"></table>
+        <table tableName="users_login"></table>
         <!--<table tableName="veeker_seed_init"></table>-->
         <!--<table tableName="orderdetail"></table>-->
         <!--<table tableName="user"></table>-->
