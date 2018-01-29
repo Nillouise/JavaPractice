@@ -43,6 +43,7 @@
       <list>
         <option value="$PROJECT_DIR$/MaxCompute/pom.xml" />
         <option value="$PROJECT_DIR$/Tool/pom.xml" />
+        <option value="$PROJECT_DIR$/pom.xml" />
       </list>
     </option>
   </component>

@@ -16,13 +16,15 @@
         <sourceOutputDir name="target/generated-sources/annotations" />
         <sourceTestOutputDir name="target/generated-test-sources/test-annotations" />
         <outputRelativeToContentRoot value="true" />
+        <module name="JavaPractice" />
         <module name="MaxCompute" />
         <module name="Tool" />
       </profile>
     </annotationProcessing>
     <bytecodeTargetLevel>
-      <module name="MaxCompute" target="1.5" />
-      <module name="Tool" target="1.5" />
+      <module name="JavaPractice" target="1.8" />
+      <module name="MaxCompute" target="1.8" />
+      <module name="Tool" target="1.8" />
     </bytecodeTargetLevel>
   </component>
 </project>
