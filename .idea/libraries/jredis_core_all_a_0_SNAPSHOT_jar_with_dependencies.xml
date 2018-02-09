@@ -1,0 +1,18 @@
+<component name="libraryTable">
+  <library name="jredis-core-all-a.0-SNAPSHOT-jar-with-dependencies">
+    <CLASSES>
+      <root url="jar://D:/big data/jredis-master/jredis-master/Release/jredis-core-all-a.0-SNAPSHOT-jar-with-dependencies.jar!/" />
+      <root url="jar://D:/big data/jredis-master/jredis-master/Release/jredis-core-api-a.0-SNAPSHOT.jar!/" />
+      <root url="jar://D:/big data/jredis-master/jredis-master/Release/jredis-core-bench-a.0-SNAPSHOT-jar-with-dependencies.jar!/" />
+      <root url="jar://D:/big data/jredis-master/jredis-master/Release/jredis-core-bench-a.0-SNAPSHOT.jar!/" />
+      <root url="jar://D:/big data/jredis-master/jredis-master/Release/jredis-core-ri-a.0-SNAPSHOT-jar-with-dependencies.jar!/" />
+      <root url="jar://D:/big data/jredis-master/jredis-master/Release/jredis-core-ri-a.0-SNAPSHOT.jar!/" />
+    </CLASSES>
+    <JAVADOC />
+    <SOURCES>
+      <root url="jar://D:/big data/jredis-master/jredis-master/Release/jredis-core-api-a.0-SNAPSHOT-sources.jar!/" />
+      <root url="jar://D:/big data/jredis-master/jredis-master/Release/jredis-core-bench-a.0-SNAPSHOT-sources.jar!/" />
+      <root url="jar://D:/big data/jredis-master/jredis-master/Release/jredis-core-ri-a.0-SNAPSHOT-sources.jar!/" />
+    </SOURCES>
+  </library>
+</component>

@@ -5,9 +5,10 @@
 *.exe
 input.txt
 output.txt
-./idea
+.idea/
 ./target
 *iml
+*.class
 
 # User-specific files
 *.suo

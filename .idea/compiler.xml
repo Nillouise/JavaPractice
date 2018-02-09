@@ -23,8 +23,8 @@
     </annotationProcessing>
     <bytecodeTargetLevel>
       <module name="JavaPractice" target="1.8" />
-      <module name="MaxCompute" target="1.8" />
-      <module name="Tool" target="1.8" />
+      <module name="MaxCompute" target="1.5" />
+      <module name="Tool" target="1.5" />
     </bytecodeTargetLevel>
   </component>
 </project>
