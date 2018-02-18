@@ -5,6 +5,7 @@ package redis;
  * @version 1.0
  * @since 2018-02-18
  **/
-public class RedisConstant {
-
+public enum MyConstant {
+    SUCCESS,
+    FAIL,
 }
