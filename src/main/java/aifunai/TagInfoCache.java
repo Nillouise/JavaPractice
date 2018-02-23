@@ -25,7 +25,6 @@ public interface TagInfoCache {
     /**
      * 应该会有给标签增加分数的功能吧
      * @param userTagName 这个userTagName 应该是某个用户的某个tag的记录名吧
-     *
      */
     boolean increse(String userTagName,Long score);
 

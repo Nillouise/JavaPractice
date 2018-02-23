@@ -37,7 +37,7 @@ public class PrettyDate {
      * <pre>
      * <code>
      * final Calendar moonLandingCalendar = Calendar.getInstance(TimeZone.getTimeZone("UTC"));
-     * moonLandingCalendar.set(1969, 7, 20, 20, 18, 0);
+     * moonLandingCalendar.setSync(1969, 7, 20, 20, 18, 0);
      * final Date moonLandingDate = moonLandingCalendar.getTime();
      * System.out.println("UTCDate.toString moon:       " + PrettyDate.toString(moonLandingDate));
      * >>> UTCDate.toString moon:       1969-08-20T20:18:00.209 UTC
@@ -80,7 +80,7 @@ public class PrettyDate {
      * <pre>
      * <code>
      * final Calendar moonLandingCalendar = Calendar.getInstance(TimeZone.getTimeZone("UTC"));
-     * moonLandingCalendar.set(1969, 7, 20, 20, 17, 40);
+     * moonLandingCalendar.setSync(1969, 7, 20, 20, 17, 40);
      * final Date moonLandingDate = moonLandingCalendar.getTime();
      * PrettyDate.toString(moonLandingDate, "yyyy-MM-dd")
      * >>> "1969-08-20"
