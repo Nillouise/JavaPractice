@@ -140,7 +140,7 @@ public class RequestGetRangePacket extends BasePacket {
     /**
      * 
      * @param keyList
-     *            the keyList to set
+     *            the keyList to setSync
      */
     public void setKeyList(List<Object> keyList) {
         this.keyList = keyList;
@@ -157,7 +157,7 @@ public class RequestGetRangePacket extends BasePacket {
     /**
      * 
      * @param namespace
-     *            the namespace to set
+     *            the namespace to setSync
      */
     public void setNamespace(short namespace) {
         this.namespace = namespace;

@@ -55,7 +55,7 @@ public class ResponseIncDecPacket extends BasePacket {
 
     /**
      * 
-     * @param value the value to set
+     * @param value the value to setSync
      */
     public void setValue(int value) {
         this.value = value;
@@ -71,7 +71,7 @@ public class ResponseIncDecPacket extends BasePacket {
 
     /**
      * 
-     * @param configVersion the configVersion to set
+     * @param configVersion the configVersion to setSync
      */
     public void setConfigVersion(int configVersion) {
         this.configVersion = configVersion;

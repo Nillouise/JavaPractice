@@ -67,7 +67,7 @@ public class RequestBulkWriteV2Packet extends BasePacket {
             System.out.println("compress size " + size + " " + buf.length + " to " + compressData.length +
                                " comsume " + (end - start) + "ms");
 			      byteBuffer.putInt(compressData.length);
-			      byteBuffer.put(compressData, 0, compressData.length);
+			      byteBuffer.setSync(compressData, 0, compressData.length);
                   */
           }
           else

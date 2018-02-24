@@ -2090,7 +2090,7 @@ public class DefaultTairManager implements TairManager {
 
 		namespace += this.getNamespaceOffset();
 		if ((namespace < 0) || (namespace > TairConstant.NAMESPACE_MAX)) {
-			MonitorLog.addStat(clientVersion, "set/error/NSERROR", null);
+			MonitorLog.addStat(clientVersion, "setSync/error/NSERROR", null);
 			return ResultCode.NSERROR;
 		}
 		DataEntryLocalCache cache = localCacheMap.get(namespace);
@@ -2114,17 +2114,17 @@ public class DefaultTairManager implements TairManager {
 		packet.setVersion((short) version);
 		packet.setExpired(expireTime);
 
-		// set flag implicitly
+		// setSync flag implicitly
 		int ec = packet.encode(0, DataEntry.TAIR_ITEM_FLAG_ADDCOUNT);
 
 		if (ec == TairConstant.KEYTOLARGE) {
-			MonitorLog.addStat(clientVersion, "set/error/KEYTOLARGE", null);
+			MonitorLog.addStat(clientVersion, "setSync/error/KEYTOLARGE", null);
 			return ResultCode.KEYTOLARGE;
 		} else if (ec == TairConstant.VALUETOLARGE) {
-			MonitorLog.addStat(clientVersion, "set/error/VALUETOLARGE", null);
+			MonitorLog.addStat(clientVersion, "setSync/error/VALUETOLARGE", null);
 			return ResultCode.VALUETOLARGE;
 		} else if (ec == TairConstant.SERIALIZEERROR) {
-			MonitorLog.addStat(clientVersion, "set/error/SERIALIZEERROR", null);
+			MonitorLog.addStat(clientVersion, "setSync/error/SERIALIZEERROR", null);
 			return ResultCode.SERIALIZEERROR;
 		}
 
@@ -2147,7 +2147,7 @@ public class DefaultTairManager implements TairManager {
 			if (null == returnPacket && status.isFlowControl()) {
 				rc = ResultCode.TAIR_RPC_OVERFLOW;
 			}
-			MonitorLog.addStat(clientVersion, "set/exception", null);
+			MonitorLog.addStat(clientVersion, "setSync/exception", null);
 		}
 		long e = System.currentTimeMillis();
 
@@ -2155,20 +2155,20 @@ public class DefaultTairManager implements TairManager {
 		 * @author xiaodu
 		 */
 		if (returnPacket != null && returnPacket.getRemoteAddress() != null) {
-			MonitorLog.addStat(clientVersion, "set", returnPacket
+			MonitorLog.addStat(clientVersion, "setSync", returnPacket
 					.getRemoteAddress().toString()
 					+ "$"
 					+ namespace
 					+ "$"
 					+ this.getGroupName(), (e - s), 1);
-			MonitorLog.addStat(clientVersion, "set/len", returnPacket
+			MonitorLog.addStat(clientVersion, "setSync/len", returnPacket
 					.getRemoteAddress().toString()
 					+ "$"
 					+ namespace
 					+ "$"
 					+ this.getGroupName(), packet.getBodyLen(), 1);
 		} else {
-			MonitorLog.addStat(clientVersion, "set", null, (e - s), 1);
+			MonitorLog.addStat(clientVersion, "setSync", null, (e - s), 1);
 		}
 		return rc;
 	}
@@ -2187,7 +2187,7 @@ public class DefaultTairManager implements TairManager {
 		// in rdb expire < 0 is important, so let's try
 		// if (expireTime < 0){
 		// MonitorLog.addStat(clientVersion, "addCount/error/INVALIDARG", null);
-		// return new ResultDTO<Integer>(ResultCode.INVALIDARG);
+		// return new CacheResult<Integer>(ResultCode.INVALIDARG);
 		// }
 		DataEntryLocalCache cache = localCacheMap.get(namespace);
 		if (cache != null) {
@@ -2524,7 +2524,7 @@ public class DefaultTairManager implements TairManager {
 			cache.del(key);
 	}
 
-	// public ResultDTO<List<DataEntry>> mget(int namespace,
+	// public CacheResult<List<DataEntry>> mget(int namespace,
 	// List<? extends Object> keys) {
 	// return mget(namespace, keys, false);
 	// }
@@ -2984,7 +2984,7 @@ public class DefaultTairManager implements TairManager {
 
 		namespace += this.getNamespaceOffset();
 		if ((namespace < 0) || (namespace > 2 * TairConstant.NAMESPACE_MAX)) {
-			MonitorLog.addStat(clientVersion, "put/error/PARTSUCC", null);
+			MonitorLog.addStat(clientVersion, "setSync/error/PARTSUCC", null);
 			return ResultCode.NSERROR;
 		}
 
@@ -2997,23 +2997,23 @@ public class DefaultTairManager implements TairManager {
 		packet.setVersion((short) version);
 		packet.setExpired(TairUtil.getDuration(expireTime));
 
-		// 'cause key's meta flag is meaningless when requsting to put,
-		// here is a trick to set flag to DataEntry meta flag when requesting.
+		// 'cause key's meta flag is meaningless when requsting to setSync,
+		// here is a trick to setSync flag to DataEntry meta flag when requesting.
 		int ec = packet.encode(
 				fill_cache ? DataEntry.TAIR_CLIENT_PUT_FILL_CACHE_FLAG
 						: DataEntry.TAIR_CLIENT_PUT_SKIP_CACHE_FLAG, 0);
 
 		if (ec == TairConstant.KEYTOLARGE) {
-			MonitorLog.addStat(clientVersion, "put/error/KEYTOLARGE", null);
+			MonitorLog.addStat(clientVersion, "setSync/error/KEYTOLARGE", null);
 			return ResultCode.KEYTOLARGE;
 		} else if (ec == TairConstant.VALUETOLARGE) {
-			MonitorLog.addStat(clientVersion, "put/error/VALUETOLARGE", null);
+			MonitorLog.addStat(clientVersion, "setSync/error/VALUETOLARGE", null);
 			return ResultCode.VALUETOLARGE;
 		} else if (ec == TairConstant.SERIALIZEERROR) {
-			MonitorLog.addStat(clientVersion, "put/error/SERIALIZEERROR", null);
+			MonitorLog.addStat(clientVersion, "setSync/error/SERIALIZEERROR", null);
 			return ResultCode.SERIALIZEERROR;
 		} else if (ec == TairConstant.KEYORVALUEISNULL) {
-			MonitorLog.addStat(clientVersion, "put/error/KEYORVALUEISNULL",
+			MonitorLog.addStat(clientVersion, "setSync/error/KEYORVALUEISNULL",
 					null);
 			return ResultCode.KEYORVALUEISNULL;
 		}
@@ -3037,7 +3037,7 @@ public class DefaultTairManager implements TairManager {
 			if (null == returnPacket && status.isFlowControl()) {
 				resultCode = ResultCode.TAIR_RPC_OVERFLOW;
 			}
-			MonitorLog.addStat(clientVersion, "put/exception", null);
+			MonitorLog.addStat(clientVersion, "setSync/exception", null);
 		}
 		long e = System.currentTimeMillis();
 
@@ -3045,20 +3045,20 @@ public class DefaultTairManager implements TairManager {
 		 * @author xiaodu
 		 */
 		if (returnPacket != null && returnPacket.getRemoteAddress() != null) {
-			MonitorLog.addStat(clientVersion, "put", returnPacket
+			MonitorLog.addStat(clientVersion, "setSync", returnPacket
 					.getRemoteAddress().toString()
 					+ "$"
 					+ namespace
 					+ "$"
 					+ this.getGroupName(), (e - s), 1);
-			MonitorLog.addStat(clientVersion, "put/len", returnPacket
+			MonitorLog.addStat(clientVersion, "setSync/len", returnPacket
 					.getRemoteAddress().toString()
 					+ "$"
 					+ namespace
 					+ "$"
 					+ this.getGroupName(), packet.getBodyLen(), 1);
 		} else {
-			MonitorLog.addStat(clientVersion, "put", null, (e - s), 1);
+			MonitorLog.addStat(clientVersion, "setSync", null, (e - s), 1);
 		}
 
 		if (resultCode == ResultCode.SUCCESS) {
@@ -3138,7 +3138,7 @@ public class DefaultTairManager implements TairManager {
 			}
 
 			/**
-			 * multi: to put multiple times, average the response time when all
+			 * multi: to setSync multiple times, average the response time when all
 			 * return
 			 * 
 			 * @author xiaodu
@@ -3402,9 +3402,9 @@ public class DefaultTairManager implements TairManager {
 	}
 
 	// ---------------don't use this interface before you knew it well
-	// --------put a KV with epoch, if client epoch > server epoch, overwrite.
+	// --------setSync a KV with epoch, if client epoch > server epoch, overwrite.
 	// or else, discard it
-	// --------conflit with version in put()
+	// --------conflit with version in setSync()
 	public ResultCode compareAndPut(int namespace, Serializable key,
 			Serializable value, short epoch) {
 		return compareAndPut(namespace, key, value, epoch, 0);
@@ -4036,7 +4036,7 @@ public class DefaultTairManager implements TairManager {
 	 *            : prefix key
 	 * @param keyValuePacks
 	 *            : secondary keys/values, version, expire, etc.
-	 * @return ResultDTO<...>.getRc().equals(ResultCode.SUCCESS) if succeed, or map
+	 * @return CacheResult<...>.getRc().equals(ResultCode.SUCCESS) if succeed, or map
 	 *         of key/resultcode of failed skeys
 	 */
 	public Result<Map<Object, ResultCode>> prefixPuts(int namespace,
@@ -4132,7 +4132,7 @@ public class DefaultTairManager implements TairManager {
 	 *            : prefix key
 	 * @param skeys
 	 *            : secondary keys
-	 * @return ResultDTO<...>.getRc().equals(ResultCode.SUCCESS) if succeed, or map
+	 * @return CacheResult<...>.getRc().equals(ResultCode.SUCCESS) if succeed, or map
 	 *         of key/resultcode of failed skeys
 	 */
 	public Result<Map<Object, ResultCode>> prefixDeletes(int namespace,
@@ -5678,7 +5678,7 @@ public class DefaultTairManager implements TairManager {
 	public void setAdminTimeout(int timeout) {
 		if (adminServerManager != null) {
 			adminServerManager.setTimeout(timeout);
-			log.warn("set admin server timeout to " + timeout);
+			log.warn("setSync admin server timeout to " + timeout);
 		}
 	}
 
@@ -5702,14 +5702,14 @@ public class DefaultTairManager implements TairManager {
 
 		public void callback(BasePacket packet) {
 			if (packet == null)
-				MonitorLog.addStat(clientVersion, "put/exception", null);
+				MonitorLog.addStat(clientVersion, "setSync/exception", null);
 			else if (packet instanceof ReturnPacket) {
 				ReturnPacket returnPacket = (ReturnPacket) packet;
 				String key = returnPacket.getRemoteAddress().toString() + "$"
 						+ namespace + "$" + getGroupName();
-				MonitorLog.addStat(clientVersion, "put", key,
+				MonitorLog.addStat(clientVersion, "setSync", key,
 						System.currentTimeMillis() - start, 1);
-				MonitorLog.addStat(clientVersion, "put/len", key,
+				MonitorLog.addStat(clientVersion, "setSync/len", key,
 						packet.getBodyLen(), 1);
 				ResultCode resultCode = ResultCode.valueOf(returnPacket
 						.getCode());
@@ -5728,7 +5728,7 @@ public class DefaultTairManager implements TairManager {
 		}
 
 		public void callback(Exception e) {
-			MonitorLog.addStat(clientVersion, "put/exception", e.toString());
+			MonitorLog.addStat(clientVersion, "setSync/exception", e.toString());
 			if (cbImpl != null) {
 				cbImpl.callback(e);
 			}
@@ -5750,7 +5750,7 @@ public class DefaultTairManager implements TairManager {
 
 		namespace += this.getNamespaceOffset();
 		if ((namespace < 0) || (namespace > TairConstant.NAMESPACE_MAX)) {
-			MonitorLog.addStat(clientVersion, "put/error/PARTSUCC", null);
+			MonitorLog.addStat(clientVersion, "setSync/error/PARTSUCC", null);
 			return ResultCode.NSERROR;
 		}
 
@@ -5767,13 +5767,13 @@ public class DefaultTairManager implements TairManager {
 						: DataEntry.TAIR_CLIENT_PUT_SKIP_CACHE_FLAG, 0);
 
 		if (ec == TairConstant.KEYTOLARGE) {
-			MonitorLog.addStat(clientVersion, "put/error/KEYTOLARGE", null);
+			MonitorLog.addStat(clientVersion, "setSync/error/KEYTOLARGE", null);
 			return ResultCode.KEYTOLARGE;
 		} else if (ec == TairConstant.VALUETOLARGE) {
-			MonitorLog.addStat(clientVersion, "put/error/VALUETOLARGE", null);
+			MonitorLog.addStat(clientVersion, "setSync/error/VALUETOLARGE", null);
 			return ResultCode.VALUETOLARGE;
 		} else if (ec == TairConstant.SERIALIZEERROR) {
-			MonitorLog.addStat(clientVersion, "put/error/SERIALIZEERROR", null);
+			MonitorLog.addStat(clientVersion, "setSync/error/SERIALIZEERROR", null);
 			return ResultCode.SERIALIZEERROR;
 		}
 

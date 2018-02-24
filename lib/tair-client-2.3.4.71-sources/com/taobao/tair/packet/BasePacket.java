@@ -247,7 +247,7 @@ public abstract class BasePacket
 
 	/**
      * 
-     * @param exception the exception to set
+     * @param exception the exception to setSync
      */
     public void setException(Exception exception) {
         this.exception = exception;

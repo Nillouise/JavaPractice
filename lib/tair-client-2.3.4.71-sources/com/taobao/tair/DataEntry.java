@@ -40,7 +40,7 @@ public class DataEntry extends DataEntryAbstract<Object> implements Serializable
 	private int edate = 0;
 	private int prefixKeySize = 0;
 
-	// put fill cache flag, just trick flag, meaningless to real data meta flag
+	// setSync fill cache flag, just trick flag, meaningless to real data meta flag
 	public static final int TAIR_CLIENT_PUT_FILL_CACHE_FLAG = 0;
 	public static final int TAIR_CLIENT_PUT_SKIP_CACHE_FLAG = 1;
 
@@ -156,7 +156,7 @@ public class DataEntry extends DataEntryAbstract<Object> implements Serializable
 	public static void encodeMeta(ByteBuffer bytes, int flag) {
 		bytes.put(DEFAULT_DATA);
 		if (flag != 0) {
-			// put flag implicitly
+			// setSync flag implicitly
 			bytes.put(bytes.position() - 13, (byte)flag);
 		}
 	}

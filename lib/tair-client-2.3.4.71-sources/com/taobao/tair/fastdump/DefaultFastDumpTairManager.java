@@ -978,11 +978,11 @@ public class DefaultFastDumpTairManager implements TairManager {
       log.warn("group:"+ group);
 			rc = setNsStatus(group, namespace, "on");
 			if (!rc.isSuccess()) {
-				log.error("set group status failed " + rc);
+				log.error("setSync group status failed " + rc);
 				return rc;
 			}
 		}
-		// wait for cs set status done
+		// wait for cs setSync status done
 		try {
 			Thread.sleep(2000);
 		} catch (Exception e) {

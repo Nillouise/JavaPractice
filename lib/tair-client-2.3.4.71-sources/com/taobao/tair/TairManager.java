@@ -143,7 +143,7 @@ public interface TairManager {
 	 * @param namespace
 	 *            the namespace for read operation
 	 * @param keys
-	 *            the set keys
+	 *            the setSync keys
 	 * @return SUCCESS, every thing was ok, you got your data. PARTSUCCESS, only
 	 *         the part of request(s) were ok. TIMEOUT, RPC timeout. CONNERROR,
 	 *         some exceptions were occurred. DATANOTEXIST, the key was not
@@ -167,11 +167,11 @@ public interface TairManager {
 	Result<DataEntry> get(int namespace, Serializable key, int expireTime);
 
 	/**
-	 * Batch put
+	 * Batch setSync
 	 * @param namespace
 	 *        the namespace for read operation
 	 * @param kvRecords
-	 * 		  key-value set
+	 * 		  key-value setSync
 	 * @param compress
 	 * 		  compress flag
 	 * @return
@@ -216,7 +216,7 @@ public interface TairManager {
 	 *            the value you want to write
 	 * @param version
 	 *            default value was 0, that means tair will always write the key
-	 *            without checking the version. otherwise put successfully only
+	 *            without checking the version. otherwise setSync successfully only
 	 *            if the input version was equal to the version at the server
 	 *            side.
 	 * @return SUCCESS, every thing was ok. TIMEOUT, RCP timeout, CONNERROR,
@@ -236,7 +236,7 @@ public interface TairManager {
 	 *            the value you want to write
 	 * @param version
 	 *            default value was 0, that means tair will always write the key
-	 *            without checking the version. otherwise put successfully only
+	 *            without checking the version. otherwise setSync successfully only
 	 *            if the input version was equal to the version at the server
 	 *            side.
 	 * @param expireTime
@@ -361,7 +361,7 @@ public interface TairManager {
 	 *            the value you want to write
 	 * @param version
 	 *            default value was 0, that means tair will always write the key
-	 *            without checking the version. otherwise put successfully only
+	 *            without checking the version. otherwise setSync successfully only
 	 *            if the input version was equal to the version at the server
 	 *            side.
 	 * @param expireTime
@@ -384,10 +384,10 @@ public interface TairManager {
 	 * @param pkey
 	 *            the prefix key for write
 	 * @param keyValuePacks
-	 *            the set of suffix keys with the value for write operation, the
+	 *            the setSync of suffix keys with the value for write operation, the
 	 *            KeyValuePack instance contains the version, expire time
 	 *            information of the suffix key. and the means of version and
-	 *            expireTime was same as put/prefixPut's parameters.
+	 *            expireTime was same as setSync/prefixPut's parameters.
 	 * @return SUCCESS, every thing was ok. TIMEOUT, RCP timeout, CONNERROR,
 	 *         some exception was occurred SERIALIZEERROR, some exception was
 	 *         occurred at encode phase
@@ -403,12 +403,12 @@ public interface TairManager {
 	 * @param pkey
 	 *            the prefix key for write
 	 * @param keyValuePacks
-	 *            the set of suffix keys with the value for write operation, the
+	 *            the setSync of suffix keys with the value for write operation, the
 	 *            KeyValuePack instance contains the version, expire time
 	 *            information of the suffix key. and the means of version and
-	 *            expireTime was same as put/prefixPut's parameters.
+	 *            expireTime was same as setSync/prefixPut's parameters.
 	 * @param keyCountPacks
-	 *            the set of suffix keys with the counter for write operation.
+	 *            the setSync of suffix keys with the counter for write operation.
 	 *            the keyCountPack instance also holds the version and expire.
 	 * @return SUCCESS, every thing was ok. TIMEOUT, RCP timeout, CONNERROR,
 	 *         some exception was occurred SERIALIZEERROR, some exception was
@@ -440,7 +440,7 @@ public interface TairManager {
 	 * @param pkey
 	 *            the prefix key
 	 * @param skeys
-	 *            the set of suffix key
+	 *            the setSync of suffix key
 	 * @return SUCCESS, every thing is ok. TIMEOUT, rpc was timeout CONNERROR,
 	 *         connection error
 	 */
@@ -589,7 +589,7 @@ public interface TairManager {
 			Serializable skey, int count);
 
 	/**
-	 * create the prefix-suffix key counter. a new prefix-suffix counter set
+	 * create the prefix-suffix key counter. a new prefix-suffix counter setSync
 	 * were created, the value was equal to count.
 	 *
 	 * @param namespace
@@ -599,9 +599,9 @@ public interface TairManager {
 	 * @param value
 	 *            the new counter's value.
 	 * @param version
-	 *            same as put's version parameter.
+	 *            same as setSync's version parameter.
 	 * @param expireTime
-	 *            same as put's expireTime parameter.
+	 *            same as setSync's expireTime parameter.
 	 * @return SUCCESS, every thing was ok, you got your data. CONNERROR, some
 	 *         exceptions were occurred. TIMEOUT, RPC tiemout
 	 */
@@ -627,11 +627,11 @@ public interface TairManager {
 	 * Read the hidden prefix-suffix keys from Tair
 	 *
 	 * @param namespace
-	 *            the namespace the key set belong to.
+	 *            the namespace the key setSync belong to.
 	 * @param pkey
 	 *            prefix key
 	 * @param skeys
-	 *            the set of suffix key.
+	 *            the setSync of suffix key.
 	 * @return SUCCESS, every thing was ok, you got your data. CONNERROR, some
 	 *         exceptions were occurred. DATANOTEXIT, the key was not exist
 	 *         TIMEOUT, RPC tiemout SERIALIZEERROR, some exception was occurred
@@ -644,11 +644,11 @@ public interface TairManager {
 	 * hide the prefix suffix key value pairs
 	 *
 	 * @param namespace
-	 *            the namespace the key set belong to.
+	 *            the namespace the key setSync belong to.
 	 * @param pkey
 	 *            prefix key
 	 * @param skeys
-	 *            the set of suffix key.
+	 *            the setSync of suffix key.
 	 * @return SUCCESS, every thing was ok, the operation was executed
 	 *         successfully at server side. CONNERROR, some exceptions were
 	 *         occurred. DATANOTEXIT, the key was not exist TIMEOUT, RPC tiemout
@@ -704,7 +704,7 @@ public interface TairManager {
 	 * @param pkey
 	 *            the prefix key
 	 * @param skey
-	 *            the set of suffix keys
+	 *            the setSync of suffix keys
 	 * @param callMode
 	 *            not used now, just ignore it.
 	 * @return SUCCESS, every thing is ok. TIMEOUT, rpc was timeout CONNERROR,
@@ -740,7 +740,7 @@ public interface TairManager {
 	 * @param namespace
 	 *            namespace for invalid operation
 	 * @param pkeySkeyListMap
-	 *            the set of prefix keys and suffix keys.
+	 *            the setSync of prefix keys and suffix keys.
 	 * @return SUCCESS, every thing is ok. TIMEOUT, rpc was timeout,
 	 *         DATANOTEXIST, data not exist. CONNERROR, connection error
 	 */
@@ -754,7 +754,7 @@ public interface TairManager {
 	 * @param namespace
 	 *            area, or namespace the key belongs to.
 	 * @param keys
-	 *            the key set to hide.
+	 *            the key setSync to hide.
 	 * @return SUCCESS, every thing was ok, you got your data. CONNERROR, some
 	 *         exceptions were occurred. TIMEOUT, RPC tiemout
 	 */
@@ -766,7 +766,7 @@ public interface TairManager {
 	 * @param namespace
 	 *            area, or namespace the keys belong to.
 	 * @param keys
-	 *            the key set to be deleted
+	 *            the key setSync to be deleted
 	 * @return
 	 */
 	ResultCode mdelete(int namespace, List<? extends Object> keys);
@@ -1085,7 +1085,7 @@ public interface TairManager {
 	 * @param namespace
 	 *            namespace for invalid operation
 	 * @param pkeySkeyListMap
-	 *            the set of prefix keys and suffix keys.
+	 *            the setSync of prefix keys and suffix keys.
 	 * @return SUCCESS, every thing is ok. TIMEOUT, rpc was timeout,
 	 *         DATANOTEXIST, data not exist. CONNERROR, connection error
 	 */

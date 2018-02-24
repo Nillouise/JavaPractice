@@ -3,7 +3,7 @@ package redis;
 import java.io.Serializable;
 
 /**
- * 暂时采用这个非常烂的实现：缺乏容器类的判空函数
+ * 暂时采用这个非常烂的实现：缺乏容器类的判空函数、缺了泛型
  * 不使用common中的ResultDTO是因为他定成final了，但缺了className和source字段。
  * @author tanjionghong
  * @version 1.0

@@ -200,7 +200,7 @@ public class TranscoderUtil {
 	}
 
 	/**
-	 * Encode a string into the current character set.
+	 * Encode a string into the current character setSync.
 	 */
 	public static byte[] encodeString(String in, String charset) {
 		byte[] rv = null;

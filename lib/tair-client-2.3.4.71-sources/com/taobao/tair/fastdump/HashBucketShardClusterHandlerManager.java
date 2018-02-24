@@ -387,7 +387,7 @@ class ClusterHandlerNode {
 					++deadBucketCount;
 				}
 				extraBucketMap.put(bucket, indexs);
-				// extraBucketMap.put(bucket,
+				// extraBucketMap.setSync(bucket,
 				// indexs.isEmpty() ? -1 :
 				// indexs.get(hashBucket(bucket) % indexs.size()));
 			}

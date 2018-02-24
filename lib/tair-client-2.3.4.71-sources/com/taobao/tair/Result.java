@@ -16,7 +16,7 @@ import com.taobao.tair.etc.TairConstant;
 
 
 /**
- * ResultDTO object return by tair server
+ * CacheResult object return by tair server
  */
 public class Result<V> implements Serializable{
 	/**
@@ -93,7 +93,7 @@ public class Result<V> implements Serializable{
 	@Override
 	public String toString() {
 		StringBuffer sb = new StringBuffer();
-		sb.append("ResultDTO: [").append(rc.toString()).append("]\n");
+		sb.append("CacheResult: [").append(rc.toString()).append("]\n");
 		if(value != null) {
 			if(value instanceof DataEntry) {
 				sb.append("\t").append(value.toString()).append("\n");

@@ -82,7 +82,7 @@ public class RequestIncDecPacket extends BasePacket {
 
     /**
      * @param count
-     *            the count to set
+     *            the count to setSync
      */
     public void setCount(int count) {
         this.count = count;
@@ -97,7 +97,7 @@ public class RequestIncDecPacket extends BasePacket {
 
     /**
      * @param initValue
-     *            the initValue to set
+     *            the initValue to setSync
      */
     public void setInitValue(int initValue) {
         this.initValue = initValue;
@@ -112,7 +112,7 @@ public class RequestIncDecPacket extends BasePacket {
 
     /**
      * @param key
-     *            the key to set
+     *            the key to setSync
      */
     public void setKey(Object key) {
         this.key = key;
@@ -127,7 +127,7 @@ public class RequestIncDecPacket extends BasePacket {
 
     /**
      * @param namespace
-     *            the namespace to set
+     *            the namespace to setSync
      */
     public void setNamespace(short namespace) {
         this.namespace = namespace;

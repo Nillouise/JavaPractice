@@ -86,7 +86,7 @@ public class RequestPutModifyDatePacket extends BasePacket {
 
     /**
      * @param data
-     *            the data to set
+     *            the data to setSync
      */
     public void setData(Object data) {
         this.data = data;
@@ -101,7 +101,7 @@ public class RequestPutModifyDatePacket extends BasePacket {
 
     /**
      * @param expired
-     *            the expired to set
+     *            the expired to setSync
      */
     public void setExpired(int expired) {
         this.expired = expired;
@@ -116,7 +116,7 @@ public class RequestPutModifyDatePacket extends BasePacket {
 
     /**
      * @param key
-     *            the key to set
+     *            the key to setSync
      */
     public void setKey(Object key) {
         this.key = key;
@@ -131,7 +131,7 @@ public class RequestPutModifyDatePacket extends BasePacket {
 
     /**
      * @param namespace
-     *            the namespace to set
+     *            the namespace to setSync
      */
     public void setNamespace(short namespace) {
         this.namespace = namespace;
@@ -146,7 +146,7 @@ public class RequestPutModifyDatePacket extends BasePacket {
 
     /**
      * @param version
-     *            the version to set
+     *            the version to setSync
      */
     public void setVersion(short version) {
         this.version = version;

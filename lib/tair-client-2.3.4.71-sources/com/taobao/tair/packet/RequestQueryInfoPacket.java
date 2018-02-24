@@ -58,7 +58,7 @@ public class RequestQueryInfoPacket extends BasePacket {
 
         /**
          * 
-         * @param serverId the serverId to set
+         * @param serverId the serverId to setSync
          */
         public void setServerId(long serverId) {
             this.server_id = serverId;
@@ -74,7 +74,7 @@ public class RequestQueryInfoPacket extends BasePacket {
 
         /**
          * 
-         * @param groupName the groupName to set
+         * @param groupName the groupName to setSync
          */
         public void setGroupName(String groupName) {
             this.groupName = groupName;
@@ -90,7 +90,7 @@ public class RequestQueryInfoPacket extends BasePacket {
 
         /**
          * 
-         * @param setQtype the qtype to set
+         * @param setQtype the qtype to setSync
          */
         public void setQtype(int type) {
             this.qtype = type;

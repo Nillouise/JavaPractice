@@ -157,7 +157,7 @@ public class ResponseGetRangePacket extends BasePacket {
 
     /**
      * 
-     * @param configVersion the configVersion to set
+     * @param configVersion the configVersion to setSync
      */
     public void setConfigVersion(int configVersion) {
         this.configVersion = configVersion;

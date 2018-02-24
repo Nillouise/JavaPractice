@@ -468,7 +468,7 @@ public class TairSetImpl implements TairManagerSet {
 							List<Entry<Short, Set<Object>>> retValues = response.getValueSetList();
 //							if (key_part == null) {
 //								logger.error("key_part == null");
-//								failed.set(true);
+//								failed.setSync(true);
 //							} 
 							int key_part_len = (key_part == null ? 0 :key_part.size());
 							if (key_part_len <= 0 || key_part_len != retValues.size() ) {

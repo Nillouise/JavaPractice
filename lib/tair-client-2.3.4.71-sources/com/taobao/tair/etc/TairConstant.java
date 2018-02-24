@@ -107,7 +107,7 @@ public class TairConstant {
 
 
     public enum MCOPS {
-      SET((short)0x01, "set"),
+      SET((short)0x01, "setSync"),
       ADD((short)0x02, "add"),
       REPLACE((short)0x03, "replace"),
       INCR((short)0x05, "incr"),
@@ -217,7 +217,7 @@ public class TairConstant {
 
     public final static int TAIR_REQ_HEXISTS_PACKET = 2161;
 
-    //set
+    //setSync
     public final static int TAIR_REQ_SCARD_PACKET = 2116;
     public final static int TAIR_RESP_SCARD_PACKET = 2216;
 

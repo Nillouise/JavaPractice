@@ -131,7 +131,7 @@ public class ResponseGetGroupPacket extends BasePacket {
 	/**
 	 * 
 	 * @param configVersion
-	 *            the configVersion to set
+	 *            the configVersion to setSync
 	 */
 	public void setConfigVersion(int configVersion) {
 		this.configVersion = configVersion;

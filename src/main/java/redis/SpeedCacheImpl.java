@@ -10,8 +10,10 @@ import redis.clients.jedis.JedisPool;
 import redis.clients.jedis.JedisPoolConfig;
 import sun.misc.Cache;
 
+import javax.xml.transform.Result;
+
 /**
- * linkedHashMap不是线程安全的，恐怕要我自己手动加锁了，但直接加锁感觉性能不扎样
+ * linkedHashMap不是线程安全的，恐怕要我自己手动加锁了，但直接加锁感觉性能不咋样
  * <p>
  * 经纬度范围查询数据 不做在缓存层
  * 经常修改会导致多个localCache不一致的情况
@@ -54,6 +56,12 @@ public class SpeedCacheImpl implements SpeedCache {
         }
     }
 
+    private Long redisExpire(byte[] key, long millisecond) {
+        try (Jedis jedis = jedisPool.getResource()) {
+            return jedis.pexpire(key, millisecond);
+        }
+    }
+
     public void test_redisGet() {
         byte[] bytes = redisGet(new byte[0]);
         System.out.println(bytes);
@@ -61,7 +69,7 @@ public class SpeedCacheImpl implements SpeedCache {
 
 
     /**
-     * @param keys   不能为null
+     * @param keys   不能为null,而且我不会给你检查keys是否为null
      * @param result 用来接收结果的列表
      * @return localCache中key没有命中的数目
      */
@@ -138,40 +146,40 @@ public class SpeedCacheImpl implements SpeedCache {
         return hi.readObject();
     }
 
-    //不知道这个优化是否有必要。//经测试，性能比一个一个地转换还差
-    @Deprecated
-    private static List<byte[]> serializable(List<? extends Serializable> values) throws IOException {
-        ByteArrayOutputStream os = new ByteArrayOutputStream();
-        HessianOutput ho = new HessianOutput(os);
+//    //不知道这个优化是否有必要。//经测试，性能比一个一个地转换还差
+//    @Deprecated
+//    private static List<byte[]> serializable(List<? extends Serializable> values) throws IOException {
+//        ByteArrayOutputStream os = new ByteArrayOutputStream();
+//        HessianOutput ho = new HessianOutput(os);
+//
+//        List<byte[]> res = new ArrayList<>(values.size());
+//
+//        for (Serializable value : values) {
+//            os.flush();
+//            ho.writeObject(value);
+//            res.add(os.toByteArray());
+//        }
+//        return res;
+//    }
 
-        List<byte[]> res = new ArrayList<>(values.size());
-
-        for (Serializable value : values) {
-            os.flush();
-            ho.writeObject(value);
-            res.add(os.toByteArray());
-        }
-        return res;
-    }
-
-    private static void test_serializable() throws IOException {
-        List<Serializable> values = new ArrayList<>();
-        for (int i = 0; i < 10000; i++) {
-            values.add(String.valueOf(i));
-        }
-
-        //调用语句的顺序会影响后面语句的速度的
-        long preTime = System.currentTimeMillis();
-        serializable(values);
-        System.out.printf("serializable batch cost time: %d\n", System.currentTimeMillis() - preTime);
-
-
-        preTime = System.currentTimeMillis();
-        for (Serializable value : values) {
-            serializable(value);
-        }
-        System.out.printf("serializable one by one cost time: %d\n", System.currentTimeMillis() - preTime);
-    }
+//    private static void test_serializable() throws IOException {
+//        List<Serializable> values = new ArrayList<>();
+//        for (int i = 0; i < 10000; i++) {
+//            values.add(String.valueOf(i));
+//        }
+//
+//        //调用语句的顺序会影响后面语句的速度的
+//        long preTime = System.currentTimeMillis();
+//        serializable(values);
+//        System.out.printf("serializable batch cost time: %d\n", System.currentTimeMillis() - preTime);
+//
+//
+//        preTime = System.currentTimeMillis();
+//        for (Serializable value : values) {
+//            serializable(value);
+//        }
+//        System.out.printf("serializable one by one cost time: %d\n", System.currentTimeMillis() - preTime);
+//    }
 
     private CacheResult noExistRedis(Serializable key) {
         localRemove(key);
@@ -232,7 +240,7 @@ public class SpeedCacheImpl implements SpeedCache {
                     if (entry == null) {
                         res.add(CacheResult.fail(CacheEnum.ErrorCode.LOCAL_CACHE_ERROR));
                     } else {
-                        res.add(CacheResult.success(entry.getData()));
+                        res.add(CacheResult.success(deserialize(entry.getData())));
                     }
                 }
                 return res;
@@ -255,6 +263,9 @@ public class SpeedCacheImpl implements SpeedCache {
 
     @Override
     public CacheResult getByRedis(Serializable key) {
+        if(key==null){
+            return CacheResult.fail(CacheEnum.ErrorCode.ILLEGAL_PARAMETER);
+        }
         try {
             byte[] bytes = redisGet(serializable(key));
             if (bytes == null) {
@@ -262,7 +273,7 @@ public class SpeedCacheImpl implements SpeedCache {
             }
             CacheEntry e = new CacheEntry(bytes, CacheEntry.Status.EXIST);
             localSet(key, e);
-            return CacheResult.success(bytes);
+            return CacheResult.success(deserialize(bytes));
         } catch (Exception e) {
             return CacheResult.fail(CacheEnum.ErrorCode.REDIS_ERROR);
         }
@@ -319,6 +330,9 @@ public class SpeedCacheImpl implements SpeedCache {
 
     @Override
     public CacheResult setSync(Serializable key, Serializable value) {
+        if(key==null){
+            return CacheResult.fail(CacheEnum.ErrorCode.ILLEGAL_PARAMETER);
+        }
         try {
             byte[] bKey = serializable(key);
             byte[] bVal = serializable(value);
@@ -338,16 +352,17 @@ public class SpeedCacheImpl implements SpeedCache {
 
     @Override
     public CacheResult increseSync(Serializable key, long score) {
+        if(key==null){
+            return CacheResult.fail(CacheEnum.ErrorCode.ILLEGAL_PARAMETER);
+        }
         try (Jedis jedis = jedisPool.getResource()) {
             Long modifiedValue = jedis.incrBy(serializable(key), score);
             if (modifiedValue == null) {
                 return CacheResult.fail(CacheEnum.ErrorCode.REDIS_ERROR);
             }
-            CacheEntry entry = localGet(key);
-            entry.setData(serializable(modifiedValue));
+            CacheEntry entry = new CacheEntry(serializable(modifiedValue), CacheEntry.Status.EXIST);
             localSet(key, entry);
-            CacheResult success = CacheResult.success(modifiedValue);
-            success.setSource(CacheEnum.Source.REDIS);
+            CacheResult success = CacheResult.success(modifiedValue,CacheEnum.Source.REDIS);
             return success;
         } catch (IOException e) {
             return CacheResult.fail(CacheEnum.ErrorCode.IO_EXCEPTION);
@@ -358,17 +373,21 @@ public class SpeedCacheImpl implements SpeedCache {
 
     @Override
     public CacheResult existKeySync(Serializable key) {
+        if(key==null){
+            return CacheResult.fail(CacheEnum.ErrorCode.ILLEGAL_PARAMETER);
+        }
         try {
             CacheEntry entry = localCache.get(key);
             if (entry != null && !CacheUtils.isExpired(entry, new Date())) {
-                CacheResult success = CacheResult.success(Boolean.TRUE);
-                success.setSource(CacheEnum.Source.LOCAL_CACHE);
+                CacheResult success = CacheResult.success(Boolean.TRUE,CacheEnum.Source.LOCAL_CACHE);
                 return success;
             } else {
                 Boolean aBoolean = redisExistsKey(serializable(key));
-                CacheResult success = CacheResult.success(aBoolean);
-                success.setSource(CacheEnum.Source.REDIS);
-                return success;
+                if (Boolean.TRUE.equals(aBoolean)) {
+                    return CacheResult.success(aBoolean, CacheEnum.Source.REDIS);
+                } else {
+                    return CacheResult.fail(CacheEnum.ErrorCode.NO_EXIST_REDIS);
+                }
             }
         } catch (Exception e) {
             return CacheResult.fail(CacheEnum.ErrorCode.REDIS_ERROR);
@@ -376,12 +395,17 @@ public class SpeedCacheImpl implements SpeedCache {
     }
 
     @Override
-    public CacheResult delKeySync(Serializable keyname) {
+    public CacheResult delKeySync(Serializable key) {
+        if(key==null){
+            return CacheResult.fail(CacheEnum.ErrorCode.ILLEGAL_PARAMETER);
+        }
         try {
-            localRemove(keyname);
-            Long aLong = redisDelKey(serializable(keyname));
+            localRemove(key);
+            Long aLong = redisDelKey(serializable(key));
             if (aLong == null) {
                 return CacheResult.fail(CacheEnum.ErrorCode.REDIS_ERROR);
+            } else if (aLong == 0) {
+                return CacheResult.fail(CacheEnum.ErrorCode.NO_EXIST_REDIS);
             }
             return CacheResult.success(aLong);
         } catch (IOException e) {
@@ -391,9 +415,35 @@ public class SpeedCacheImpl implements SpeedCache {
         }
     }
 
+    /**
+     * 我发现一个问题，就是localcache里的expire信息可能会丢失，从而不会因为expire到期而被删除。
+     * 也就是说localCahe里的expire不是那么的可靠，建议有被设置expire的数据都从redis里获取
+     *
+     * @param key
+     * @param millisecond
+     * @return
+     */
     @Override
-    public CacheResult expireSync(Serializable keyname, long millisecond) {
-        return null;
+    public CacheResult expireSync(Serializable key, long millisecond) {
+        if(key==null){
+            return CacheResult.fail(CacheEnum.ErrorCode.ILLEGAL_PARAMETER);
+        }
+        try {
+            CacheEntry entry = localGet(key);
+            if (entry != null) {
+                entry.setExpireTime(new Date().getTime() + millisecond);
+                localSet(key, entry);
+            }
+            //这里并不会把redis的数据刷新到本地缓存
+            Long aBoolean = redisExpire(serializable(key), millisecond);
+            if (aBoolean == 1) {
+                return CacheResult.success(aBoolean, CacheEnum.Source.REDIS);
+            } else {
+                return CacheResult.fail(CacheEnum.ErrorCode.NO_EXIST_REDIS);
+            }
+        } catch (Exception e) {
+            return CacheResult.fail(CacheEnum.ErrorCode.REDIS_ERROR);
+        }
     }
 
     static class SO implements Serializable {
@@ -432,6 +482,10 @@ public class SpeedCacheImpl implements SpeedCache {
 
     //测试类
     public static void main(String[] args) throws IOException {
-        test_localCacheVsRedis();
+//        test_localCacheVsRedis();
+        byte[] serializable = serializable(null);
+        System.out.println(serializable);
+        Object deserialize = deserialize(serializable);
+        System.out.println(deserialize);
     }
 }

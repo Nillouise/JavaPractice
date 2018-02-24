@@ -442,7 +442,7 @@ public class TairClient {
 				if (queue != null) {
 					queue.put(response);
 					if (isDebugEnabled) {
-						LOGGER.debug("put response [" + requestId
+						LOGGER.debug("setSync response [" + requestId
 								+ "], time is:" + System.currentTimeMillis());
 					}
 				} else if (isDebugEnabled) {
@@ -451,7 +451,7 @@ public class TairClient {
 				}
 				
 			} catch (InterruptedException e) {
-				throw new TairClientException("put response error", e);
+				throw new TairClientException("setSync response error", e);
 			}
 		} else {
 			if (isDebugEnabled)

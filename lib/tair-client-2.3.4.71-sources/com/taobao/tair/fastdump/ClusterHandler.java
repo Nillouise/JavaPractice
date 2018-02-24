@@ -30,7 +30,7 @@ class ClusterHandler {
 	private DefaultTairManager tairManager = new DefaultTairManager();
 	// DefaultTairManager can update version automatically, we may ignore
 	// cluster change if just check version by getConfigVersion() before/after
-	// one fuction operation(get()/put() etc.), 'cause getConfigVersion() may just
+	// one fuction operation(get()/setSync() etc.), 'cause getConfigVersion() may just
 	// happen on version-changing process. So, ClusterHandler save lastVersion to
 	// be a check base version.
 	private int lastVersion = 0;

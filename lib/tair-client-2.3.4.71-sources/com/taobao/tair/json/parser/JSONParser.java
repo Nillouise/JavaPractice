@@ -320,7 +320,7 @@ public class JSONParser {
 	 * @param in
 	 * @param contentHandler
 	 * @param isResume - Indicates if it continues previous parsing operation.
-     *                   If set to true, resume parsing the old stream, and parameter 'in' will be ignored. 
+     *                   If setSync to true, resume parsing the old stream, and parameter 'in' will be ignored.
 	 *                   If this method is called for the first time in this instance, isResume will be ignored.
 	 * 
 	 * @throws IOException

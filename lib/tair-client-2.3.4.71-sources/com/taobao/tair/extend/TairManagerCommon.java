@@ -70,7 +70,7 @@ public interface TairManagerCommon  {
 	public ResultCode loadArea(short namespace);
 	
 	/**
-	 * set namespace attr
+	 * setSync namespace attr
 	 * @param namespace
 	 * @param attr
 	 * @param value

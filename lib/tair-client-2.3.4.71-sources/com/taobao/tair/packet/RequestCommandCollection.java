@@ -48,7 +48,7 @@ public class RequestCommandCollection {
 
     /**
      *
-     * @param requestCommandMap the requestCommandMap to set
+     * @param requestCommandMap the requestCommandMap to setSync
      */
     public void setRequestCommandMap(Map<Long, BasePacket> requestCommandMap) {
         this.requestCommandMap = requestCommandMap;
@@ -64,7 +64,7 @@ public class RequestCommandCollection {
 
     /**
      *
-     * @param resultList the resultList to set
+     * @param resultList the resultList to setSync
      */
     public void setResultList(List<BasePacket> resultList) {
         this.resultList = resultList;

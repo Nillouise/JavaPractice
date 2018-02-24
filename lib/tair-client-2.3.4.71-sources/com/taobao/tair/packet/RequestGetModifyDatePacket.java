@@ -115,7 +115,7 @@ public class RequestGetModifyDatePacket extends BasePacket {
     /**
      *
      * @param keyList
-     *            the keyList to set
+     *            the keyList to setSync
      */
     public void setKeyList(Set<Object> keyList) {
         this.keyList = keyList;
@@ -132,7 +132,7 @@ public class RequestGetModifyDatePacket extends BasePacket {
     /**
      *
      * @param namespace
-     *            the namespace to set
+     *            the namespace to setSync
      */
     public void setNamespace(short namespace) {
         this.namespace = namespace;

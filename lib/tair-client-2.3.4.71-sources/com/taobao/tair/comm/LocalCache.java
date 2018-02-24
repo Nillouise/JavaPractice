@@ -32,7 +32,7 @@ public class LocalCache<KeyType, ValueType> {
 	private long lastEnhanceTime = System.currentTimeMillis();
 	private int currentCapDelta = 0;
 	private int currentExpDelta = 0;
-    //whether need to clone value when put and get value from local cache.
+    //whether need to clone value when setSync and get value from local cache.
     private boolean isNeedClone = true;
 
 	class Element {

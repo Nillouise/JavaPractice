@@ -54,7 +54,7 @@ public class RequestGetGroupPacket extends BasePacket {
 
     /**
      * 
-     * @param configVersion the configVersion to set
+     * @param configVersion the configVersion to setSync
      */
     public void setConfigVersion(int configVersion) {
         this.configVersion = configVersion;
@@ -70,7 +70,7 @@ public class RequestGetGroupPacket extends BasePacket {
 
     /**
      * 
-     * @param groupName the groupName to set
+     * @param groupName the groupName to setSync
      */
     public void setGroupName(String groupName) {
         this.groupName = groupName;

@@ -56,7 +56,7 @@ public class ReturnPacket extends BasePacket {
 
     /**
      * 
-     * @param code the code to set
+     * @param code the code to setSync
      */
     public void setCode(int code) {
         this.code = code;
@@ -76,7 +76,7 @@ public class ReturnPacket extends BasePacket {
 
     /**
      * 
-     * @param configVersion the configVersion to set
+     * @param configVersion the configVersion to setSync
      */
     public void setConfigVersion(int configVersion) {
         this.configVersion = configVersion;
@@ -92,7 +92,7 @@ public class ReturnPacket extends BasePacket {
 
     /**
      * 
-     * @param msg the msg to set
+     * @param msg the msg to setSync
      */
     public void setMsg(String msg) {
         this.msg = msg;
