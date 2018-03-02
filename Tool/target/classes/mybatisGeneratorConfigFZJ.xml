@@ -1,0 +1,45 @@
+<?xml version="1.0" encoding="UTF-8"?>
+<!DOCTYPE generatorConfiguration PUBLIC "-//mybatis.org//DTD MyBatis Generator Configuration 1.0//EN"
+        "http://mybatis.org/dtd/mybatis-generator-config_1_0.dtd">
+<generatorConfiguration>
+    <!-- ���ݿ�������λ�� -->
+    <!--<classPathEntry-->
+            <!--location="C:\Users\fuzhijian\soft\mybatis-generator-core-1.3.6\mybatis-generator-core-1.3.6\lib\mysql-connector-java-5.1.34.jar"/>-->
+    <!--&lt;!&ndash; <classPathEntry location="C:\oracle\product\10.2.0\db_1\jdbc\lib\ojdbc14.jar" />&ndash;&gt;-->
+    <context id="DB2Tables" targetRuntime="MyBatis3">
+        <commentGenerator>
+            <property name="suppressAllComments" value="true"/>
+        </commentGenerator>
+        <!-- ���ݿ�����URL���û��������� -->
+        <jdbcConnection driverClass="com.mysql.jdbc.Driver"
+                        connectionURL="jdbc:mysql://rm-bp1ekv86jpdmj6217io.mysql.rds.aliyuncs.com:3306/aifunai?characterEncoding=utf8"
+                        userId="aifunai" password="Db123456!">
+            <!--<jdbcConnection driverClass="oracle.jdbc.driver.OracleDriver" connectionURL="jdbc:oracle:thin:@localhost:1521:orcl" userId="msa" password="msa">-->
+        </jdbcConnection>
+        <javaTypeResolver>
+            <property name="forceBigDecimals" value="false"/>
+        </javaTypeResolver>
+        <!-- ����ģ�͵İ�����λ�� -->
+        <javaModelGenerator targetPackage="aifunai.model"
+                            targetProject=".\src\main\java">
+            <property name="enableSubPackages" value="true"/>
+            <property name="trimStrings" value="true"/>
+        </javaModelGenerator>
+        <!-- ���ɵ�ӳ���ļ�������λ�� -->
+        <sqlMapGenerator targetPackage="aifunai.mapping"
+                         targetProject=".\src\main\java">
+            <property name="enableSubPackages" value="true"/>
+        </sqlMapGenerator>
+        <!-- ����DAO�İ�����λ�� -->
+        <javaClientGenerator type="XMLMAPPER" targetPackage="aifunai.dao"
+                             targetProject=".\src\main\java">
+            <property name="enableSubPackages" value="true"/>
+        </javaClientGenerator>
+        <!-- Ҫ������Щ��(����tableName��domainObjectName�Ϳ���) -->
+        <table tableName="poi_info" domainObjectName="TestTable" enableCountByExample="false"
+               enableUpdateByExample="false" enableDeleteByExample="false" enableSelectByExample="false"
+               selectByExampleQueryId="false"/>
+        <!-- <table tableName="course_info" domainObjectName="CourseInfo" enableCountByExample="false" enableUpdateByExample="false" enableDeleteByExample="false" enableSelectByExample="false" selectByExampleQueryId="false" />
+        <table tableName="course_user_info" domainObjectName="CourseUserInfo" enableCountByExample="false" enableUpdateByExample="false" enableDeleteByExample="false" enableSelectByExample="false" selectByExampleQueryId="false" /> -->
+    </context>
+</generatorConfiguration>

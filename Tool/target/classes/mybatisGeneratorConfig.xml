@@ -9,9 +9,12 @@
             <!-- 是否去除自动生成的注释 true：是 ： false:否 -->
             <property name="suppressAllComments" value="true"/>
         </commentGenerator>
+
+        <!--tinyint转boolean https://liuyanzhao.com/6119.html-->
         <!--mysql数据库连接的信息：驱动类、连接地址、用户名、密码 -->
         <jdbcConnection driverClass="com.mysql.jdbc.Driver"
-                        connectionURL="jdbc:mysql://rm-bp1ekv86jpdmj6217io.mysql.rds.aliyuncs.com:3306/aifunai" userId="aifunai"
+                        connectionURL="jdbc:mysql://rm-bp1ekv86jpdmj6217io.mysql.rds.aliyuncs.com:3306/aifunai?tinyInt1isBit=false"
+                        userId="aifunai"
                         password="Db123456!">
         </jdbcConnection>
 
@@ -28,7 +31,7 @@
         </javaTypeResolver>
 
         <!-- targetProject:生成model类的位置，重要！！ -->
-        <javaModelGenerator targetPackage="com.aifunai.model"
+        <javaModelGenerator targetPackage="com.aifunai.data.dao.dataobject.poi"
                             targetProject=".\src\main\java">
             <!-- enableSubPackages:是否让schema作为包的后缀 -->
             <property name="enableSubPackages" value="false"/>
@@ -50,8 +53,12 @@
         </javaClientGenerator>
 
         <!-- 指定数据库表，要生成哪些表，就写哪些表，要和数据库中对应，不能写错！ -->
-        <table tableName="veeker_regist"></table>
-        <table tableName="veeker_seed_init"></table>
+        <table tableName="poi_info" enableCountByExample="false" enableUpdateByExample="false"
+               enableDeleteByExample="false"
+               enableSelectByExample="false" selectByExampleQueryId="false">
+            <generatedKey column="userId" sqlStatement="Mysql" identity="true"/>
+        </table>
+        <!--<table tableName="poi_distance_matrix"></table>-->
         <!--<table tableName="orderdetail"></table>-->
         <!--<table tableName="user"></table>-->
     </context>

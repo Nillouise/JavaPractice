@@ -7,11 +7,14 @@
     <context id="testTables" targetRuntime="MyBatis3">
         <commentGenerator>
             <!-- 是否去除自动生成的注释 true：是 ： false:否 -->
-            <property name="suppressAllComments" data="true"/>
+            <property name="suppressAllComments" value="true"/>
         </commentGenerator>
+
+        <!--tinyint转boolean https://liuyanzhao.com/6119.html-->
         <!--mysql数据库连接的信息：驱动类、连接地址、用户名、密码 -->
         <jdbcConnection driverClass="com.mysql.jdbc.Driver"
-                        connectionURL="jdbc:mysql://rm-bp1ekv86jpdmj6217io.mysql.rds.aliyuncs.com:3306/aifunai" userId="aifunai"
+                        connectionURL="jdbc:mysql://rm-bp1ekv86jpdmj6217io.mysql.rds.aliyuncs.com:3306/aifunai?tinyInt1isBit=false"
+                        userId="aifunai"
                         password="Db123456!">
         </jdbcConnection>
 
@@ -24,34 +27,38 @@
         <!-- 默认false，把JDBC DECIMAL 和 NUMERIC 类型解析为 Integer，
         为 true时把JDBC DECIMAL和NUMERIC类型解析为java.math.BigDecimal -->
         <javaTypeResolver>
-            <property name="forceBigDecimals" data="true"/>
+            <property name="forceBigDecimals" value="false"/>
         </javaTypeResolver>
 
         <!-- targetProject:生成model类的位置，重要！！ -->
-        <javaModelGenerator targetPackage="com.aifunai.dao.dataobject.VerificationCodeDO"
+        <javaModelGenerator targetPackage="com.aifunai.data.dao.dataobject.poi"
                             targetProject=".\src\main\java">
             <!-- enableSubPackages:是否让schema作为包的后缀 -->
-            <property name="enableSubPackages" data="false"/>
+            <property name="enableSubPackages" value="false"/>
             <!-- 从数据库返回的值被清理前后的空格 -->
-            <property name="trimStrings" data="true"/>
+            <property name="trimStrings" value="true"/>
         </javaModelGenerator>
 
         <!-- targetProject:mapper映射xml文件生成的位置，重要！！ -->
-        <sqlMapGenerator targetPackage="com.aifunai.dao.mapper"
+        <sqlMapGenerator targetPackage="com.aifunai.mapper"
                          targetProject=".\src\main\java">
-            <property name="enableSubPackages" data="false"/>
+            <property name="enableSubPackages" value="false"/>
         </sqlMapGenerator>
 
         <!-- targetPackage：mapper接口生成的位置，重要！！ -->
         <javaClientGenerator type="XMLMAPPER"
-                             targetPackage="com.aifunai.dao.dataobject"
+                             targetPackage="com.aifunai.dao"
                              targetProject=".\src\main\java">
-            <property name="enableSubPackages" data="false"/>
+            <property name="enableSubPackages" value="false"/>
         </javaClientGenerator>
 
         <!-- 指定数据库表，要生成哪些表，就写哪些表，要和数据库中对应，不能写错！ -->
-        <table tableName="verification_code"></table>
-        <!--<table tableName="veeker_seed_init"></table>-->
+        <table tableName="poi_info" enableCountByExample="false" enableUpdateByExample="false"
+               enableDeleteByExample="false"
+               enableSelectByExample="false" selectByExampleQueryId="false">
+            <generatedKey column="userId" sqlStatement="Mysql" identity="true"/>
+        </table>
+        <!--<table tableName="poi_distance_matrix"></table>-->
         <!--<table tableName="orderdetail"></table>-->
         <!--<table tableName="user"></table>-->
     </context>

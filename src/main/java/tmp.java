@@ -17,9 +17,6 @@ public class tmp
         {
 //            e.printStackTrace();
         }
-
-
         System.out.println("fdsf");
-
     }
 }

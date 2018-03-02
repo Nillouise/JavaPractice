@@ -1,0 +1,482 @@
+<?xml version="1.0" encoding="UTF-8"?>
+<!DOCTYPE mapper PUBLIC "-//mybatis.org//DTD Mapper 3.0//EN" "http://mybatis.org/dtd/mybatis-3-mapper.dtd">
+<mapper namespace="aifunai.dao.TestTableMapper">
+  <resultMap id="BaseResultMap" type="aifunai.model.TestTable">
+    <result column="id" jdbcType="BIGINT" property="id" />
+    <result column="status" jdbcType="TINYINT" property="status" />
+    <result column="lng" jdbcType="REAL" property="lng" />
+    <result column="lat" jdbcType="REAL" property="lat" />
+    <result column="score" jdbcType="REAL" property="score" />
+    <result column="area_id" jdbcType="INTEGER" property="areaId" />
+    <result column="country_id" jdbcType="INTEGER" property="countryId" />
+    <result column="tags" jdbcType="VARCHAR" property="tags" />
+    <result column="poi_name_cn" jdbcType="VARCHAR" property="poiNameCn" />
+    <result column="poi_name_en" jdbcType="VARCHAR" property="poiNameEn" />
+    <result column="poi_name_local" jdbcType="VARCHAR" property="poiNameLocal" />
+    <result column="poi_details" jdbcType="VARCHAR" property="poiDetails" />
+    <result column="open_time" jdbcType="VARCHAR" property="openTime" />
+    <result column="poi_tel" jdbcType="VARCHAR" property="poiTel" />
+    <result column="poi_url" jdbcType="VARCHAR" property="poiUrl" />
+    <result column="arrival_pattern" jdbcType="VARCHAR" property="arrivalPattern" />
+    <result column="visiting_time" jdbcType="REAL" property="visitingTime" />
+    <result column="price" jdbcType="INTEGER" property="price" />
+    <result column="tips" jdbcType="VARCHAR" property="tips" />
+    <result column="pic_urls" jdbcType="VARCHAR" property="picUrls" />
+    <result column="remark_count" jdbcType="INTEGER" property="remarkCount" />
+    <result column="address_cn" jdbcType="VARCHAR" property="addressCn" />
+    <result column="address_local" jdbcType="VARCHAR" property="addressLocal" />
+    <result column="address_en" jdbcType="VARCHAR" property="addressEn" />
+    <result column="extend_fields" jdbcType="VARCHAR" property="extendFields" />
+    <result column="gmt_create" jdbcType="TIMESTAMP" property="gmtCreate" />
+    <result column="gmt_modify" jdbcType="TIMESTAMP" property="gmtModify" />
+  </resultMap>
+  <resultMap extends="BaseResultMap" id="ResultMapWithBLOBs" type="aifunai.model.TestTableWithBLOBs">
+    <result column="parent_id" jdbcType="LONGVARCHAR" property="parentId" />
+    <result column="vertex_id" jdbcType="LONGVARCHAR" property="vertexId" />
+  </resultMap>
+  <sql id="Blob_Column_List">
+    parent_id, vertex_id
+  </sql>
+  <insert id="insert" parameterType="aifunai.model.TestTableWithBLOBs">
+    insert into poi_info (id, status, lng, 
+      lat, score, area_id, country_id, 
+      tags, poi_name_cn, poi_name_en, 
+      poi_name_local, poi_details, open_time, 
+      poi_tel, poi_url, arrival_pattern, 
+      visiting_time, price, tips, 
+      pic_urls, remark_count, address_cn, 
+      address_local, address_en, extend_fields, 
+      gmt_create, gmt_modify, parent_id, 
+      vertex_id)
+    values (#{id,jdbcType=BIGINT}, #{status,jdbcType=TINYINT}, #{lng,jdbcType=REAL}, 
+      #{lat,jdbcType=REAL}, #{score,jdbcType=REAL}, #{areaId,jdbcType=INTEGER}, #{countryId,jdbcType=INTEGER}, 
+      #{tags,jdbcType=VARCHAR}, #{poiNameCn,jdbcType=VARCHAR}, #{poiNameEn,jdbcType=VARCHAR}, 
+      #{poiNameLocal,jdbcType=VARCHAR}, #{poiDetails,jdbcType=VARCHAR}, #{openTime,jdbcType=VARCHAR}, 
+      #{poiTel,jdbcType=VARCHAR}, #{poiUrl,jdbcType=VARCHAR}, #{arrivalPattern,jdbcType=VARCHAR}, 
+      #{visitingTime,jdbcType=REAL}, #{price,jdbcType=INTEGER}, #{tips,jdbcType=VARCHAR}, 
+      #{picUrls,jdbcType=VARCHAR}, #{remarkCount,jdbcType=INTEGER}, #{addressCn,jdbcType=VARCHAR}, 
+      #{addressLocal,jdbcType=VARCHAR}, #{addressEn,jdbcType=VARCHAR}, #{extendFields,jdbcType=VARCHAR}, 
+      #{gmtCreate,jdbcType=TIMESTAMP}, #{gmtModify,jdbcType=TIMESTAMP}, #{parentId,jdbcType=LONGVARCHAR}, 
+      #{vertexId,jdbcType=LONGVARCHAR})
+  </insert>
+  <insert id="insertSelective" parameterType="aifunai.model.TestTableWithBLOBs">
+    insert into poi_info
+    <trim prefix="(" suffix=")" suffixOverrides=",">
+      <if test="id != null">
+        id,
+      </if>
+      <if test="status != null">
+        status,
+      </if>
+      <if test="lng != null">
+        lng,
+      </if>
+      <if test="lat != null">
+        lat,
+      </if>
+      <if test="score != null">
+        score,
+      </if>
+      <if test="areaId != null">
+        area_id,
+      </if>
+      <if test="countryId != null">
+        country_id,
+      </if>
+      <if test="tags != null">
+        tags,
+      </if>
+      <if test="poiNameCn != null">
+        poi_name_cn,
+      </if>
+      <if test="poiNameEn != null">
+        poi_name_en,
+      </if>
+      <if test="poiNameLocal != null">
+        poi_name_local,
+      </if>
+      <if test="poiDetails != null">
+        poi_details,
+      </if>
+      <if test="openTime != null">
+        open_time,
+      </if>
+      <if test="poiTel != null">
+        poi_tel,
+      </if>
+      <if test="poiUrl != null">
+        poi_url,
+      </if>
+      <if test="arrivalPattern != null">
+        arrival_pattern,
+      </if>
+      <if test="visitingTime != null">
+        visiting_time,
+      </if>
+      <if test="price != null">
+        price,
+      </if>
+      <if test="tips != null">
+        tips,
+      </if>
+      <if test="picUrls != null">
+        pic_urls,
+      </if>
+      <if test="remarkCount != null">
+        remark_count,
+      </if>
+      <if test="addressCn != null">
+        address_cn,
+      </if>
+      <if test="addressLocal != null">
+        address_local,
+      </if>
+      <if test="addressEn != null">
+        address_en,
+      </if>
+      <if test="extendFields != null">
+        extend_fields,
+      </if>
+      <if test="gmtCreate != null">
+        gmt_create,
+      </if>
+      <if test="gmtModify != null">
+        gmt_modify,
+      </if>
+      <if test="parentId != null">
+        parent_id,
+      </if>
+      <if test="vertexId != null">
+        vertex_id,
+      </if>
+    </trim>
+    <trim prefix="values (" suffix=")" suffixOverrides=",">
+      <if test="id != null">
+        #{id,jdbcType=BIGINT},
+      </if>
+      <if test="status != null">
+        #{status,jdbcType=TINYINT},
+      </if>
+      <if test="lng != null">
+        #{lng,jdbcType=REAL},
+      </if>
+      <if test="lat != null">
+        #{lat,jdbcType=REAL},
+      </if>
+      <if test="score != null">
+        #{score,jdbcType=REAL},
+      </if>
+      <if test="areaId != null">
+        #{areaId,jdbcType=INTEGER},
+      </if>
+      <if test="countryId != null">
+        #{countryId,jdbcType=INTEGER},
+      </if>
+      <if test="tags != null">
+        #{tags,jdbcType=VARCHAR},
+      </if>
+      <if test="poiNameCn != null">
+        #{poiNameCn,jdbcType=VARCHAR},
+      </if>
+      <if test="poiNameEn != null">
+        #{poiNameEn,jdbcType=VARCHAR},
+      </if>
+      <if test="poiNameLocal != null">
+        #{poiNameLocal,jdbcType=VARCHAR},
+      </if>
+      <if test="poiDetails != null">
+        #{poiDetails,jdbcType=VARCHAR},
+      </if>
+      <if test="openTime != null">
+        #{openTime,jdbcType=VARCHAR},
+      </if>
+      <if test="poiTel != null">
+        #{poiTel,jdbcType=VARCHAR},
+      </if>
+      <if test="poiUrl != null">
+        #{poiUrl,jdbcType=VARCHAR},
+      </if>
+      <if test="arrivalPattern != null">
+        #{arrivalPattern,jdbcType=VARCHAR},
+      </if>
+      <if test="visitingTime != null">
+        #{visitingTime,jdbcType=REAL},
+      </if>
+      <if test="price != null">
+        #{price,jdbcType=INTEGER},
+      </if>
+      <if test="tips != null">
+        #{tips,jdbcType=VARCHAR},
+      </if>
+      <if test="picUrls != null">
+        #{picUrls,jdbcType=VARCHAR},
+      </if>
+      <if test="remarkCount != null">
+        #{remarkCount,jdbcType=INTEGER},
+      </if>
+      <if test="addressCn != null">
+        #{addressCn,jdbcType=VARCHAR},
+      </if>
+      <if test="addressLocal != null">
+        #{addressLocal,jdbcType=VARCHAR},
+      </if>
+      <if test="addressEn != null">
+        #{addressEn,jdbcType=VARCHAR},
+      </if>
+      <if test="extendFields != null">
+        #{extendFields,jdbcType=VARCHAR},
+      </if>
+      <if test="gmtCreate != null">
+        #{gmtCreate,jdbcType=TIMESTAMP},
+      </if>
+      <if test="gmtModify != null">
+        #{gmtModify,jdbcType=TIMESTAMP},
+      </if>
+      <if test="parentId != null">
+        #{parentId,jdbcType=LONGVARCHAR},
+      </if>
+      <if test="vertexId != null">
+        #{vertexId,jdbcType=LONGVARCHAR},
+      </if>
+    </trim>
+  </insert>
+  <resultMap id="BaseResultMap" type="aifunai.model.TestTable">
+    <result column="id" jdbcType="BIGINT" property="id" />
+    <result column="status" jdbcType="TINYINT" property="status" />
+    <result column="lng" jdbcType="REAL" property="lng" />
+    <result column="lat" jdbcType="REAL" property="lat" />
+    <result column="score" jdbcType="REAL" property="score" />
+    <result column="area_id" jdbcType="INTEGER" property="areaId" />
+    <result column="country_id" jdbcType="INTEGER" property="countryId" />
+    <result column="tags" jdbcType="VARCHAR" property="tags" />
+    <result column="poi_name_cn" jdbcType="VARCHAR" property="poiNameCn" />
+    <result column="poi_name_en" jdbcType="VARCHAR" property="poiNameEn" />
+    <result column="poi_name_local" jdbcType="VARCHAR" property="poiNameLocal" />
+    <result column="poi_details" jdbcType="VARCHAR" property="poiDetails" />
+    <result column="open_time" jdbcType="VARCHAR" property="openTime" />
+    <result column="poi_tel" jdbcType="VARCHAR" property="poiTel" />
+    <result column="poi_url" jdbcType="VARCHAR" property="poiUrl" />
+    <result column="arrival_pattern" jdbcType="VARCHAR" property="arrivalPattern" />
+    <result column="visiting_time" jdbcType="REAL" property="visitingTime" />
+    <result column="price" jdbcType="INTEGER" property="price" />
+    <result column="tips" jdbcType="VARCHAR" property="tips" />
+    <result column="pic_urls" jdbcType="VARCHAR" property="picUrls" />
+    <result column="remark_count" jdbcType="INTEGER" property="remarkCount" />
+    <result column="address_cn" jdbcType="VARCHAR" property="addressCn" />
+    <result column="address_local" jdbcType="VARCHAR" property="addressLocal" />
+    <result column="address_en" jdbcType="VARCHAR" property="addressEn" />
+    <result column="extend_fields" jdbcType="VARCHAR" property="extendFields" />
+    <result column="gmt_create" jdbcType="TIMESTAMP" property="gmtCreate" />
+    <result column="gmt_modify" jdbcType="TIMESTAMP" property="gmtModify" />
+  </resultMap>
+  <resultMap extends="BaseResultMap" id="ResultMapWithBLOBs" type="aifunai.model.TestTableWithBLOBs">
+    <result column="parent_id" jdbcType="LONGVARCHAR" property="parentId" />
+    <result column="vertex_id" jdbcType="LONGVARCHAR" property="vertexId" />
+  </resultMap>
+  <sql id="Blob_Column_List">
+    parent_id, vertex_id
+  </sql>
+  <insert id="insert" parameterType="aifunai.model.TestTableWithBLOBs">
+    insert into poi_info (id, status, lng, 
+      lat, score, area_id, country_id, 
+      tags, poi_name_cn, poi_name_en, 
+      poi_name_local, poi_details, open_time, 
+      poi_tel, poi_url, arrival_pattern, 
+      visiting_time, price, tips, 
+      pic_urls, remark_count, address_cn, 
+      address_local, address_en, extend_fields, 
+      gmt_create, gmt_modify, parent_id, 
+      vertex_id)
+    values (#{id,jdbcType=BIGINT}, #{status,jdbcType=TINYINT}, #{lng,jdbcType=REAL}, 
+      #{lat,jdbcType=REAL}, #{score,jdbcType=REAL}, #{areaId,jdbcType=INTEGER}, #{countryId,jdbcType=INTEGER}, 
+      #{tags,jdbcType=VARCHAR}, #{poiNameCn,jdbcType=VARCHAR}, #{poiNameEn,jdbcType=VARCHAR}, 
+      #{poiNameLocal,jdbcType=VARCHAR}, #{poiDetails,jdbcType=VARCHAR}, #{openTime,jdbcType=VARCHAR}, 
+      #{poiTel,jdbcType=VARCHAR}, #{poiUrl,jdbcType=VARCHAR}, #{arrivalPattern,jdbcType=VARCHAR}, 
+      #{visitingTime,jdbcType=REAL}, #{price,jdbcType=INTEGER}, #{tips,jdbcType=VARCHAR}, 
+      #{picUrls,jdbcType=VARCHAR}, #{remarkCount,jdbcType=INTEGER}, #{addressCn,jdbcType=VARCHAR}, 
+      #{addressLocal,jdbcType=VARCHAR}, #{addressEn,jdbcType=VARCHAR}, #{extendFields,jdbcType=VARCHAR}, 
+      #{gmtCreate,jdbcType=TIMESTAMP}, #{gmtModify,jdbcType=TIMESTAMP}, #{parentId,jdbcType=LONGVARCHAR}, 
+      #{vertexId,jdbcType=LONGVARCHAR})
+  </insert>
+  <insert id="insertSelective" parameterType="aifunai.model.TestTableWithBLOBs">
+    insert into poi_info
+    <trim prefix="(" suffix=")" suffixOverrides=",">
+      <if test="id != null">
+        id,
+      </if>
+      <if test="status != null">
+        status,
+      </if>
+      <if test="lng != null">
+        lng,
+      </if>
+      <if test="lat != null">
+        lat,
+      </if>
+      <if test="score != null">
+        score,
+      </if>
+      <if test="areaId != null">
+        area_id,
+      </if>
+      <if test="countryId != null">
+        country_id,
+      </if>
+      <if test="tags != null">
+        tags,
+      </if>
+      <if test="poiNameCn != null">
+        poi_name_cn,
+      </if>
+      <if test="poiNameEn != null">
+        poi_name_en,
+      </if>
+      <if test="poiNameLocal != null">
+        poi_name_local,
+      </if>
+      <if test="poiDetails != null">
+        poi_details,
+      </if>
+      <if test="openTime != null">
+        open_time,
+      </if>
+      <if test="poiTel != null">
+        poi_tel,
+      </if>
+      <if test="poiUrl != null">
+        poi_url,
+      </if>
+      <if test="arrivalPattern != null">
+        arrival_pattern,
+      </if>
+      <if test="visitingTime != null">
+        visiting_time,
+      </if>
+      <if test="price != null">
+        price,
+      </if>
+      <if test="tips != null">
+        tips,
+      </if>
+      <if test="picUrls != null">
+        pic_urls,
+      </if>
+      <if test="remarkCount != null">
+        remark_count,
+      </if>
+      <if test="addressCn != null">
+        address_cn,
+      </if>
+      <if test="addressLocal != null">
+        address_local,
+      </if>
+      <if test="addressEn != null">
+        address_en,
+      </if>
+      <if test="extendFields != null">
+        extend_fields,
+      </if>
+      <if test="gmtCreate != null">
+        gmt_create,
+      </if>
+      <if test="gmtModify != null">
+        gmt_modify,
+      </if>
+      <if test="parentId != null">
+        parent_id,
+      </if>
+      <if test="vertexId != null">
+        vertex_id,
+      </if>
+    </trim>
+    <trim prefix="values (" suffix=")" suffixOverrides=",">
+      <if test="id != null">
+        #{id,jdbcType=BIGINT},
+      </if>
+      <if test="status != null">
+        #{status,jdbcType=TINYINT},
+      </if>
+      <if test="lng != null">
+        #{lng,jdbcType=REAL},
+      </if>
+      <if test="lat != null">
+        #{lat,jdbcType=REAL},
+      </if>
+      <if test="score != null">
+        #{score,jdbcType=REAL},
+      </if>
+      <if test="areaId != null">
+        #{areaId,jdbcType=INTEGER},
+      </if>
+      <if test="countryId != null">
+        #{countryId,jdbcType=INTEGER},
+      </if>
+      <if test="tags != null">
+        #{tags,jdbcType=VARCHAR},
+      </if>
+      <if test="poiNameCn != null">
+        #{poiNameCn,jdbcType=VARCHAR},
+      </if>
+      <if test="poiNameEn != null">
+        #{poiNameEn,jdbcType=VARCHAR},
+      </if>
+      <if test="poiNameLocal != null">
+        #{poiNameLocal,jdbcType=VARCHAR},
+      </if>
+      <if test="poiDetails != null">
+        #{poiDetails,jdbcType=VARCHAR},
+      </if>
+      <if test="openTime != null">
+        #{openTime,jdbcType=VARCHAR},
+      </if>
+      <if test="poiTel != null">
+        #{poiTel,jdbcType=VARCHAR},
+      </if>
+      <if test="poiUrl != null">
+        #{poiUrl,jdbcType=VARCHAR},
+      </if>
+      <if test="arrivalPattern != null">
+        #{arrivalPattern,jdbcType=VARCHAR},
+      </if>
+      <if test="visitingTime != null">
+        #{visitingTime,jdbcType=REAL},
+      </if>
+      <if test="price != null">
+        #{price,jdbcType=INTEGER},
+      </if>
+      <if test="tips != null">
+        #{tips,jdbcType=VARCHAR},
+      </if>
+      <if test="picUrls != null">
+        #{picUrls,jdbcType=VARCHAR},
+      </if>
+      <if test="remarkCount != null">
+        #{remarkCount,jdbcType=INTEGER},
+      </if>
+      <if test="addressCn != null">
+        #{addressCn,jdbcType=VARCHAR},
+      </if>
+      <if test="addressLocal != null">
+        #{addressLocal,jdbcType=VARCHAR},
+      </if>
+      <if test="addressEn != null">
+        #{addressEn,jdbcType=VARCHAR},
+      </if>
+      <if test="extendFields != null">
+        #{extendFields,jdbcType=VARCHAR},
+      </if>
+      <if test="gmtCreate != null">
+        #{gmtCreate,jdbcType=TIMESTAMP},
+      </if>
+      <if test="gmtModify != null">
+        #{gmtModify,jdbcType=TIMESTAMP},
+      </if>
+      <if test="parentId != null">
+        #{parentId,jdbcType=LONGVARCHAR},
+      </if>
+      <if test="vertexId != null">
+        #{vertexId,jdbcType=LONGVARCHAR},
+      </if>
+    </trim>
+  </insert>
+</mapper>

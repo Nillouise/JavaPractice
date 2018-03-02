@@ -22,7 +22,7 @@ public class Generator {
     public static void main(String[] args) throws InterruptedException, SQLException, IOException, XMLParserException, InvalidConfigurationException {
         List<String> warnings = new ArrayList<String>();
         boolean overwrite = true;
-        File configFile = new File("D:\\Project\\JavaPractice\\Tool\\src\\main\\resources\\mybatisGeneratorConfig.xml");
+        File configFile = new File("D:\\Project\\JavaPractice\\Tool\\src\\main\\resources\\mybatisGeneratorConfigFZJ.xml");
         ConfigurationParser cp = new ConfigurationParser(warnings);
         Configuration config = cp.parseConfiguration(configFile);
         DefaultShellCallback callback = new DefaultShellCallback(overwrite);
