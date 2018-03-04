@@ -53,9 +53,13 @@
         </javaClientGenerator>
 
         <!-- 指定数据库表，要生成哪些表，就写哪些表，要和数据库中对应，不能写错！ -->
-        <table tableName="poi_info" enableCountByExample="false" enableUpdateByExample="false"
-               enableDeleteByExample="false"
-               enableSelectByExample="false" selectByExampleQueryId="false">
+        <!--此东西禁用了Example-->
+        <!--<table tableName="poi_info" enableCountByExample="false" enableUpdateByExample="false"-->
+               <!--enableDeleteByExample="false"-->
+               <!--enableSelectByExample="false" selectByExampleQueryId="false">-->
+            <!--<generatedKey column="userId" sqlStatement="Mysql" identity="true"/>-->
+        <!--</table>-->
+        <table tableName="poi_info" >
             <generatedKey column="userId" sqlStatement="Mysql" identity="true"/>
         </table>
         <!--<table tableName="poi_distance_matrix"></table>-->
